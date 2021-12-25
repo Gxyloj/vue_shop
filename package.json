@@ -24,6 +24,7 @@
     "@vue/compiler-sfc": "^3.0.0",
     "babel-plugin-component": "^1.1.1",
     "style-resources-loader": "^1.5.0",
+    "unplugin-vue-components": "^0.17.10",
     "vue-cli-plugin-element-plus": "~0.0.13",
     "vue-cli-plugin-style-resources-loader": "^0.1.5"
   }
