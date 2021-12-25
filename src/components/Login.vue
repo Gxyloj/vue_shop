@@ -45,8 +45,8 @@ export default {
     return {
       // 登录表单
       loginForm: {
-        username: '1111111',
-        password: '1111111'
+        username: 'admin',
+        password: '123456'
       },
       // 表单验证
       loginFormRule: {
@@ -71,11 +71,9 @@ export default {
         if (!valid) return
         loginRequest(this.loginForm).then(res => {
           if (res.meta.status !== 200) return ElMessage.error('登录失败')
-          ElMessage({
-            message: '登录成功',
-            type: 'success'
-          })
-
+          ElMessage({message: '登录成功', type: 'success'})
+          window.sessionStorage.setItem('token',res.data.token)
+          this.$router.push('/home')
         })
       })
 

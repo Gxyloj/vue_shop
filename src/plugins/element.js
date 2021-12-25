@@ -1,4 +1,4 @@
-import { ElButton,ElForm,ElFormItem,ElInput,ElIcon, } from 'element-plus'
+import { ElButton,ElForm,ElFormItem,ElInput,ElIcon,ElContainer,ElHeader,ElAside,ElMain } from 'element-plus'
 import lang from 'element-plus/lib/locale/lang/zh-cn'
 import locale from 'element-plus/lib/locale'
 
@@ -9,4 +9,8 @@ export default (app) => {
   app.use(ElFormItem)
   app.use(ElInput)
   app.use(ElIcon)
+  app.use(ElContainer)
+  app.use(ElHeader)
+  app.use(ElAside)
+  app.use(ElMain)
 }
