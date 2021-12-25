@@ -7,8 +7,11 @@
       </el-header>
       <el-container>
 <!--        侧边栏-->
-        <el-aside width="200px">
-          <home-side></home-side>
+        <el-aside :width="isCollapse ? '64px' : '200px'">
+          <div class="toggle_button" @click="toggleCollapse">
+            |||
+          </div>
+          <home-side :menuList="menuList" :isCollapse="isCollapse"></home-side>
         </el-aside>
 <!--        右侧-->
         <el-main>Main</el-main>
@@ -28,7 +31,8 @@ export default {
   components: {HomeSide, HomeHeader},
   data(){
     return{
-      menuList:[]
+      menuList:[],
+      isCollapse:false
     }
   },
   methods:{
@@ -44,6 +48,10 @@ export default {
         this.menuList = res.data
         console.log(this.menuList);
       })
+    },
+    // 折叠菜单
+    toggleCollapse(){
+      this.isCollapse = !this.isCollapse
     }
   },
   created() {
@@ -68,4 +76,15 @@ export default {
 .el-main {
   background-color: #e9edf0;
 }
+
+.toggle_button{
+  background-color: #313743;
+  color: #fff;
+  text-align: center;
+  font-size: 10px;
+  line-height: 24px;
+  letter-spacing: 0.2em;
+  cursor: pointer;
+}
+
 </style>

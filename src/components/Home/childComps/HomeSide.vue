@@ -1,55 +1,62 @@
 <template>
   <div>
     <el-menu background-color="#313743"
-             text-color="#fff">
+             text-color="#fff"
+             active-text-color="#399eff"
+             :unique-opened="true"
+             :collapse="isCollapse"
+             :collapse-transition="false">
       <!--      一级菜单-->
-      <el-submenu index="1">
+      <el-submenu :index="item.id + ''" v-for="item in menuList" :key="item.id">
         <template #title>
-          <i class="iconfont icon-yonghu"/>
-          <span>用户管理</span>
+          <i :class="iconObj[item.id]"/>
+          <span>{{item.authName}}</span>
         </template>
         <!--        二级菜单-->
-        <el-menu-item index="1-1">
+        <el-menu-item :index="subItem.id + ''" v-for="subItem in item.children" :key="subItem.id">
           <template #title>
-            <i class="iconfont icon-yonghu"/>
-            <span>用户管理</span>
+            <el-icon><Menu /></el-icon>
+            <span>{{subItem.authName}}</span>
           </template>
         </el-menu-item>
       </el-submenu>
-      <el-submenu index="2">
-        <template #title>
-          <i class="iconfont icon-quanxianguanli"/>
-          <span>权限管理</span>
-        </template>
-      </el-submenu>
-      <el-submenu index="3">
-        <template #title>
-          <i class="iconfont icon-shangpin"/>
-          <span>商品管理</span>
-        </template>
-      </el-submenu>
-      <el-submenu index="4">
-        <template #title>
-          <i class="iconfont icon-dingdan"/>
-          <span>订单管理</span>
-        </template>
-      </el-submenu>
-      <el-submenu index="5">
-        <template #title>
-          <i class="iconfont icon-iconfontpaixingbang"/>
-          <span>数据统计</span>
-        </template>
-      </el-submenu>
+
     </el-menu>
   </div>
 </template>
 
 <script>
 export default {
-  name: "HomeSide"
+  name: "HomeSide",
+  props:{
+    menuList:{
+      type:Array
+    },
+    isCollapse:{
+      type:Boolean,
+      default:false
+    }
+  },
+  data(){
+    return{
+      iconObj:{
+        '125':'iconfont icon-yonghu',
+        '103':'iconfont icon-quanxianguanli',
+        '101':'iconfont icon-shangpin',
+        '102':'iconfont icon-dingdan',
+        '145':'iconfont icon-iconfontpaixingbang',
+      }
+    }
+  }
 }
 </script>
 
-<style scoped>
-
+<style lang="less" scoped>
+  .iconfont,
+  .el-icon{
+    margin-right: 5px;
+  }
+  .el-menu{
+    border-right: none;
+  }
 </style>
