@@ -19,18 +19,35 @@
 
 <script>
 import {ElMessage} from "element-plus";
+import {getMenus} from "@/network/getMenus";
 import HomeHeader from "@/components/Home/childComps/HomeHeader";
 import HomeSide from "@/components/Home/childComps/HomeSide";
 
 export default {
   name: "Home",
   components: {HomeSide, HomeHeader},
+  data(){
+    return{
+      menuList:[]
+    }
+  },
   methods:{
     logout(){
       window.sessionStorage.clear()
       ElMessage.success('退出成功')
       this.$router.push('/login')
+    },
+    getMenus(){
+      getMenus().then(res => {
+        // console.log(res);
+        if (res.meta.status !== 200) return ElMessage.error('获取失败')
+        this.menuList = res.data
+        console.log(this.menuList);
+      })
     }
+  },
+  created() {
+    this.getMenus()
   }
 }
 </script>
@@ -45,7 +62,7 @@ export default {
 }
 
 .el-aside {
-  background-color: #363d40;
+  background-color: #313743;
 }
 
 .el-main {
