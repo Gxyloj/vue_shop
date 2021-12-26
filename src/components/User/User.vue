@@ -36,7 +36,8 @@
                 @handleCurrentChange="handleCurrentChange"
                 @userStateChange="userStateChange"></UserList>
     </el-card>
-    <AddUserDialog ref="AddUserDialog"/>
+    <AddUserDialog ref="AddUserDialog"
+                   @updateList="getUserList"/>
   </div>
 </template>
 
@@ -54,7 +55,7 @@ export default {
       queryInfo: {
         query: '',
         pagenum: 1,
-        pagesize: 2
+        pagesize: 5
       },
       userList: [],
       total: 0,

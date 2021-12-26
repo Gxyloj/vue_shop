@@ -1,35 +1,33 @@
 import {request} from "@/network/request";
+import qs from 'qs'
 
-export function getUserList(queryInfo){
+export function getUserList(queryInfo) {
   return request({
-    url:'/users',
-    method:'get',
-    params:{
-      query:queryInfo.query,
-      pagenum:queryInfo.pagenum,
-      pagesize:queryInfo.pagesize
+    url: '/users',
+    method: 'get',
+    params: {
+      query: queryInfo.query,
+      pagenum: queryInfo.pagenum,
+      pagesize: queryInfo.pagesize
     }
   })
 }
 
-export function setUserState(userinfo){
+export function setUserState(userinfo) {
   return request({
-    url:`users/${userinfo.id}/state/${userinfo.mg_state}`,
-    method:'put'
+    url: `users/${userinfo.id}/state/${userinfo.mg_state}`,
+    method: 'put'
   })
 }
 
-export function addUser(userForm){
+export function addUser(userForm) {
   return request({
-    url:'/users',
-    method:'post',
-    params:{
-      // userForm
-      // username:userForm.username,
-      // password:userForm.password,
-      // email:userForm.email,
-      // mobile:userForm.mobile
-      username:'aaa'
+    method: 'post',
+    url: '/users',
+    // headers: {'X-Requested-With': 'XMLHttpRequest'},
+    data: {
+      username:userForm.username,
+      password:userForm.password
     }
   })
 }

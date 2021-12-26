@@ -3,6 +3,7 @@
       v-model="addDialogVisible"
       title="添加用户"
       width="50%"
+      :append-to-body="true"
   >
     <!--    主体-->
     <el-form class="add_form"
@@ -10,7 +11,7 @@
              :rules="addFormRules"
              label-width="80px"
              ref="addFormRef"
-             :status-icon="true" >
+             :status-icon="true">
       <el-form-item label="用户名" prop="username">
         <el-input v-model="addForm.username"></el-input>
       </el-form-item>
@@ -41,6 +42,8 @@
 <script>
 import {addUser} from "@/network/User";
 import {checkEmail, checkMobile} from "@/common/utlis";
+import {ElMessage} from "element-plus";
+import Login from "@/components/Login";
 
 export default {
   name: "AddUserDialog",
@@ -63,11 +66,11 @@ export default {
         ],
         email: [
           {required: true, message: '请输入邮箱', trigger: 'blur'},
-          {validator:checkEmail,trigger: 'blur'}
+          {validator: checkEmail, trigger: 'blur'}
         ],
         mobile: [
           {required: true, message: '请输入手机号', trigger: 'blur'},
-          {validator:checkMobile,trigger:'blur'}
+          {validator: checkMobile, trigger: 'blur'}
         ]
       },
       // 邮箱规则
@@ -85,11 +88,22 @@ export default {
       }
       this.$refs.addFormRef.resetFields()
     },
-    addUser(){
-      addUser(this.addForm).then(res => {
-        console.log(res);
+    addUser() {
+      this.$refs.addFormRef.validate(valid => {
+        // console.log(valid);
+        if (!valid)
+          return
+        addUser(this.addForm).then(res => {
+          if (res.meta.status !== 201) {
+            return ElMessage.error(res.meta.msg)
+            // console.log(res.meta.msg)
+          }
+          this.addDialogVisible = false
+          ElMessage.success('添加成功')
+          this.$emit('updateList')
+        })
       })
-      console.log(this.addForm);
+
     }
   }
 }

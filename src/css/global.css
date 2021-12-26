@@ -17,3 +17,8 @@ html,body,
 .el-form-item.is-success .el-input__validateIcon {
   color:#67C23A
 }
+
+/*将dialog对话框的z-index调低，message显示在上方*/
+.el-overlay{
+  z-index: 2000 !important;
+}
