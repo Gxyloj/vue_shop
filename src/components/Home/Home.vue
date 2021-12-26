@@ -14,7 +14,9 @@
           <home-side :menuList="menuList" :isCollapse="isCollapse"></home-side>
         </el-aside>
 <!--        右侧-->
-        <el-main>Main</el-main>
+        <el-main>
+          <router-view/>
+        </el-main>
       </el-container>
     </el-container>
   </div>
@@ -25,10 +27,11 @@ import {ElMessage} from "element-plus";
 import {getMenus} from "@/network/getMenus";
 import HomeHeader from "@/components/Home/childComps/HomeHeader";
 import HomeSide from "@/components/Home/childComps/HomeSide";
+import Welcome from "@/components/Welcome";
 
 export default {
   name: "Home",
-  components: {HomeSide, HomeHeader},
+  components: {Welcome, HomeSide, HomeHeader},
   data(){
     return{
       menuList:[],
@@ -46,7 +49,7 @@ export default {
         // console.log(res);
         if (res.meta.status !== 200) return ElMessage.error('获取失败')
         this.menuList = res.data
-        console.log(this.menuList);
+        // console.log(this.menuList);
       })
     },
     // 折叠菜单
