@@ -13,8 +13,8 @@
       </el-table-column>
       <el-table-column label="操作" width="180px">
         <template v-slot="scope">
-          <el-button size="mini" type="primary" icon="el-icon-edit"></el-button>
-          <el-button size="mini" type="danger" icon="el-icon-delete"></el-button>
+          <el-button size="mini" type="primary" icon="el-icon-edit" @click="editUser(scope.row.id)"></el-button>
+          <el-button size="mini" type="danger" icon="el-icon-delete" @click="deleteUser(scope.row.id)"></el-button>
           <el-tooltip content="编辑角色" :enterable="false">
             <el-button size="mini" type="warning" icon="el-icon-setting"></el-button>
           </el-tooltip>
@@ -61,6 +61,12 @@ export default {
     userStateChange(userinfo){
       // console.log(userinfo);
       this.$emit('userStateChange',userinfo)
+    },
+    editUser(id){
+      this.$emit('editUser',id)
+    },
+    deleteUser(id){
+      this.$emit('deleteUser',id)
     }
   }
 }

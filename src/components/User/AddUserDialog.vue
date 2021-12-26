@@ -3,7 +3,6 @@
       v-model="addDialogVisible"
       title="添加用户"
       width="50%"
-      :append-to-body="true"
   >
     <!--    主体-->
     <el-form class="add_form"
@@ -100,6 +99,7 @@ export default {
           }
           this.addDialogVisible = false
           ElMessage.success('添加成功')
+          this.resetAddForm()
           this.$emit('updateList')
         })
       })

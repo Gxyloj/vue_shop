@@ -34,22 +34,32 @@
                 :total="total"
                 @handleSizeChange="handleSizeChange"
                 @handleCurrentChange="handleCurrentChange"
-                @userStateChange="userStateChange"></UserList>
+                @userStateChange="userStateChange"
+                @editUser="editUser"
+                @deleteUser="deleteUser">
+
+      </UserList>
     </el-card>
-    <AddUserDialog ref="AddUserDialog"
+
+    <!--FIXME 爷孙通信-->
+    <AddUserDialog ref="AddUserDialogRef"
                    @updateList="getUserList"/>
+    <EditUserDialog ref="EditUserDialogRef"
+                    :editForm="editForm"
+                    @updateList="getUserList"/>
   </div>
 </template>
 
 <script>
-import {getUserList, setUserState} from "@/network/User";
-import {ElMessage} from "element-plus";
+import {deleteUser, getUserList, selectID, setUserState} from "@/network/User";
+import {ElMessage, ElMessageBox} from "element-plus";
 import UserList from "@/components/User/UserList";
 import AddUserDialog from "@/components/User/AddUserDialog";
+import EditUserDialog from "@/components/User/EditUserDialog";
 
 export default {
   name: "User",
-  components: {AddUserDialog, UserList},
+  components: { EditUserDialog, AddUserDialog, UserList},
   data() {
     return {
       queryInfo: {
@@ -59,7 +69,9 @@ export default {
       },
       userList: [],
       total: 0,
-      addDialogVisible:false
+      addDialogVisible:false,
+      //保存根据ID查询到的用户信息
+      editForm:[],
     }
   },
   created() {
@@ -68,7 +80,6 @@ export default {
   methods: {
     getUserList() {
       getUserList(this.queryInfo).then(res => {
-        console.log(res);
         if (res.meta.status !== 200) return ElMessage.error('获取用户列表失败')
         this.userList = res.data.users
         this.total = res.data.total
@@ -91,6 +102,42 @@ export default {
         ElMessage.success('设置成功')
       })
     },
+    editUser(id){
+      selectID(id).then(res => {
+        this.editForm = res.data
+      })
+      this.$refs.EditUserDialogRef.editUserVisible = true
+    },
+    deleteUser(id){
+      // console.log(id)
+      ElMessageBox.confirm(
+          '这将永久删除用户，是否确定删除',
+          '提示',
+          {
+            confirmButtonText: '确定',
+            cancelButtonText: '取消',
+            type: 'warning',
+          }
+      )
+          .then(() => {
+            deleteUser(id).then(res => {
+              if (res.meta.status !== 200) return ElMessage.error(res.meta.msg)
+              ElMessage({
+                type: 'success',
+                message: res.meta.msg,
+              })
+              this.getUserList()
+            })
+
+          })
+          .catch(() => {
+            ElMessage({
+              type: 'info',
+              message: '操作取消',
+            })
+          })
+    }
+
   }
 }
 </script>

@@ -1,5 +1,4 @@
 import {request} from "@/network/request";
-import qs from 'qs'
 
 export function getUserList(queryInfo) {
   return request({
@@ -22,12 +21,42 @@ export function setUserState(userinfo) {
 
 export function addUser(userForm) {
   return request({
-    method: 'post',
     url: '/users',
-    // headers: {'X-Requested-With': 'XMLHttpRequest'},
+    method: 'post',
     data: {
       username:userForm.username,
-      password:userForm.password
+      password:userForm.password,
+      email:userForm.email,
+      mobile:userForm.mobile
+    }
+  })
+}
+//根据ID查询用户
+export function selectID(id){
+  return request({
+    url:`users/${id}`
+  })
+}
+
+//编辑用户提交
+export function editUser(userInfo){
+  return request({
+    url:`users/${userInfo.id}`,
+    method:'put',
+    data:{
+      id:userInfo.id,
+      email: userInfo.email,
+      mobile: userInfo.mobile
+    }
+  })
+}
+
+export function deleteUser(id){
+  return request({
+    url:`users/${id}`,
+    method:'delete',
+    data:{
+      id:id
     }
   })
 }
