@@ -25,9 +25,9 @@
 <script>
 import {ElMessage} from "element-plus";
 import {getMenus} from "@/network/getMenus";
-import HomeHeader from "@/components/Home/childComps/HomeHeader";
-import HomeSide from "@/components/Home/childComps/HomeSide";
-import Welcome from "@/components/Welcome";
+import HomeHeader from "@/views/Home/childComps/HomeHeader";
+import HomeSide from "@/views/Home/childComps/HomeSide";
+import Welcome from "@/views/Welcome";
 
 export default {
   name: "Home",

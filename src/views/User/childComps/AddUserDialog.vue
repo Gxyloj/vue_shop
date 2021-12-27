@@ -5,8 +5,7 @@
       width="50%"
   >
     <!--    主体-->
-    <el-form class="add_form"
-             :model="addForm"
+    <el-form :model="addForm"
              :rules="addFormRules"
              label-width="80px"
              ref="addFormRef"
@@ -42,7 +41,7 @@
 import {addUser} from "@/network/User";
 import {checkEmail, checkMobile} from "@/common/utlis";
 import {ElMessage} from "element-plus";
-import Login from "@/components/Login";
+import Login from "@/views/Login";
 
 export default {
   name: "AddUserDialog",

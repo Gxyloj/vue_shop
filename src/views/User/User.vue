@@ -1,10 +1,6 @@
 <template>
   <div>
-    <el-breadcrumb separator-class="el-icon-arrow-right">
-      <el-breadcrumb-item :to="{ path: '/home' }">首页</el-breadcrumb-item>
-      <el-breadcrumb-item>用户管理</el-breadcrumb-item>
-      <el-breadcrumb-item>用户列表</el-breadcrumb-item>
-    </el-breadcrumb>
+    <BreadCrumbs :navTitle="navTitle"/>
     <el-card>
       <el-row :gutter="20">
         <el-col :span="8">
@@ -24,7 +20,7 @@
           </el-input>
         </el-col>
         <el-col :span="4">
-          <el-button type="primary" @click="this.$refs.AddUserDialog.addDialogVisible = true">
+          <el-button type="primary" @click="this.$refs.AddUserDialogRef.addDialogVisible = true">
             添加用户
           </el-button>
         </el-col>
@@ -53,19 +49,24 @@
 <script>
 import {deleteUser, getUserList, selectID, setUserState} from "@/network/User";
 import {ElMessage, ElMessageBox} from "element-plus";
-import UserList from "@/components/User/UserList";
-import AddUserDialog from "@/components/User/AddUserDialog";
-import EditUserDialog from "@/components/User/EditUserDialog";
+import UserList from "@/views/User/childComps/UserList";
+import AddUserDialog from "@/views/User/childComps/AddUserDialog";
+import EditUserDialog from "@/views/User/childComps/EditUserDialog";
+import BreadCrumbs from "@/components/commom/BreadCrumbs";
 
 export default {
   name: "User",
-  components: { EditUserDialog, AddUserDialog, UserList},
+  components: {BreadCrumbs, EditUserDialog, AddUserDialog, UserList},
   data() {
     return {
       queryInfo: {
         query: '',
         pagenum: 1,
         pagesize: 5
+      },
+      navTitle:{
+        title:['首页','用户管理','用户列表'],
+        path: ['/home']
       },
       userList: [],
       total: 0,

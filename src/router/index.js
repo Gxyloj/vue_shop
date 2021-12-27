@@ -1,36 +1,45 @@
-import { createRouter, createWebHistory } from 'vue-router'
-import Login from "../components/Login";
-import Home from "@/components/Home/Home";
-import Welcome from "@/components/Welcome";
-import User from "@/components/User/User";
+import {createRouter, createWebHistory} from 'vue-router'
+import Login from "../views/Login";
+import Home from "@/views/Home/Home";
+import Welcome from "@/views/Welcome";
+import User from "@/views/User/User";
+import Rights from "@/views/Power/Rights";
+import Roles from "@/views/Power/Roles";
 
 
 const routes = [
   {
     path: '/',
-    redirect:'/login'
+    redirect: '/login'
   },
   {
     path: '/login',
-    component:Login
+    component: Login
   },
   {
     path: '/home',
     component: Home,
     redirect: '/welcome',
-    children:[
+    children: [
       {
-        path:'/welcome',
-        component:Welcome
-      },{
+        path: '/welcome',
+        component: Welcome
+      },
+      {
         path: '/users',
-        component:User
+        component: User
+      },
+      {
+        path:'/rights',
+        component:Rights
+      },
+      {
+        path:'/roles',
+        component: Roles
       }
     ]
   },
-  {
-
-  }
+  {}
 ]
 
 const router = createRouter({
@@ -38,11 +47,11 @@ const router = createRouter({
   routes
 })
 
-router.beforeEach((to,from,next) => {
+router.beforeEach((to, from, next) => {
   //to 将要访问的路径
   //from 从哪个路径来
   //next 函数 放行
-  if(to.path === '/login') return next()
+  if (to.path === '/login') return next()
   //获取token
   const tokenStr = window.sessionStorage.getItem('token')
   if (!tokenStr) return next('/login')
