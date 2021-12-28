@@ -7,7 +7,7 @@
       <el-table-column label="角色描述" prop="roleDesc"></el-table-column>
       <el-table-column label="操作" width="290px">
         <template v-slot="scope">
-          <el-button size="mini" type="primary" icon="el-icon-edit">编辑</el-button>
+          <el-button size="mini" type="primary" icon="el-icon-edit" @click="editRole(scope.row.id)">编辑</el-button>
           <el-button size="mini" type="danger" icon="el-icon-delete">删除</el-button>
           <el-button size="mini" type="warning" icon="el-icon-setting">分配权限</el-button>
         </template>
@@ -22,6 +22,11 @@ export default {
   props:{
     roleList:{
       type:Array
+    }
+  },
+  methods:{
+    editRole(id){
+      this.$emit('editRole',id)
     }
   }
 }

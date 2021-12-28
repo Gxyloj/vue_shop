@@ -23,3 +23,22 @@ export function addRole(roleInfo) {
     }
   })
 }
+
+export function selectRoleID(id){
+  return request({
+    url:`roles/${id}`,
+    method:'get',
+
+  })
+}
+
+export function editRole(roleInfo){
+  return request({
+    url:`roles/${roleInfo.roleId}`,
+    method:'put',
+    data:{
+      roleName:roleInfo.roleName,
+      roleDesc:roleInfo.roleDesc
+    }
+  })
+}

@@ -21,7 +21,7 @@
       </el-form>
       <!--      底部-->
       <template #footer>
-        <el-button type="info">取消</el-button>
+        <el-button type="info" @click="this.editUserVisible = false ">取消</el-button>
         <el-button type="primary" @click="editUser">确认</el-button>
       </template>
     </el-dialog>
