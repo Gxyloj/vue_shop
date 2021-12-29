@@ -32,7 +32,8 @@
                 @handleCurrentChange="handleCurrentChange"
                 @userStateChange="userStateChange"
                 @editUser="editUser"
-                @deleteUser="deleteUser">
+                @deleteUser="deleteUser"
+                @setRole="setRole">
 
       </UserList>
     </el-card>
@@ -43,6 +44,10 @@
     <EditUserDialog ref="EditUserDialogRef"
                     :editForm="editForm"
                     @updateList="getUserList"/>
+    <SetRoleDialog ref="SetRoleDialogRef"
+                   :currentUser="currentUser"
+                   @updateList="getUserList"/>
+
   </div>
 </template>
 
@@ -53,10 +58,11 @@ import UserList from "@/views/User/childComps/UserList";
 import AddUserDialog from "@/views/User/childComps/AddUserDialog";
 import EditUserDialog from "@/views/User/childComps/EditUserDialog";
 import BreadCrumbs from "@/components/commom/BreadCrumbs";
+import SetRoleDialog from "@/views/User/childComps/SetRoleDialog";
 
 export default {
   name: "User",
-  components: {BreadCrumbs, EditUserDialog, AddUserDialog, UserList},
+  components: {SetRoleDialog, BreadCrumbs, EditUserDialog, AddUserDialog, UserList},
   data() {
     return {
       queryInfo: {
@@ -73,6 +79,8 @@ export default {
       addDialogVisible:false,
       //保存根据ID查询到的用户信息
       editForm:[],
+      //分配角色点击的用户
+      currentUser:{}
     }
   },
   created() {
@@ -137,6 +145,10 @@ export default {
               message: '操作取消',
             })
           })
+    },
+    setRole(userInfo){
+      this.$refs.SetRoleDialogRef.setRoleVisible = true
+      this.currentUser = userInfo
     }
 
   }

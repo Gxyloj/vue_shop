@@ -1,8 +1,8 @@
 import {request} from "@/network/request";
 
-export function getRightsList() {
+export function getRightsList(type) {
   return request({
-    url: '/rights/list'
+    url: `/rights/${type}`
   })
 }
 
@@ -39,6 +39,30 @@ export function editRole(roleInfo){
     data:{
       roleName:roleInfo.roleName,
       roleDesc:roleInfo.roleDesc
+    }
+  })
+}
+
+export function deleteRole(id){
+  return request({
+    url:`roles/${id}`,
+    method:'delete'
+  })
+}
+
+export function removeRights(roleID,rightsID){
+  return request({
+    url:`roles/${roleID}/rights/${rightsID}`,
+    method:'delete'
+  })
+}
+
+export function roleAuthorization(roleID,keys){
+  return request({
+    url:`roles/${roleID}/rights`,
+    method:'post',
+    data:{
+      rids:keys
     }
   })
 }

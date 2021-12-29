@@ -4,7 +4,8 @@
     <el-card>
       <el-button type="primary" @click="addRole">添加角色</el-button>
       <RolesList :roleList="roleList"
-                 @editRole="editRole"/>
+                 @editRole="editRole"
+                 @updateRoleList="getRolesList"/>
     </el-card>
     <AddRoleDialog ref="AddRoleDialogRef"
                    @updateRoleList="getRolesList"/>

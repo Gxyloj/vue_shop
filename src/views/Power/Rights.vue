@@ -29,7 +29,7 @@ export default {
   },
   methods:{
     getRightsList(){
-      getRightsList().then(res => {
+      getRightsList('list').then(res => {
         if (res.meta.status !== 200) return ElMessage.error(res.meta.msg)
         ElMessage.success(res.meta.msg)
         this.rightsList = res.data

@@ -1,6 +1,6 @@
 <template>
   <div>
-    <el-table :data="userList" border stripe >
+    <el-table :data="userList" border stripe>
       <el-table-column type="index" label="#"></el-table-column>
       <el-table-column prop="username" label="用户名"></el-table-column>
       <el-table-column prop="mobile" label="手机号"></el-table-column>
@@ -16,7 +16,8 @@
           <el-button size="mini" type="primary" icon="el-icon-edit" @click="editUser(scope.row.id)"></el-button>
           <el-button size="mini" type="danger" icon="el-icon-delete" @click="deleteUser(scope.row.id)"></el-button>
           <el-tooltip content="编辑角色" :enterable="false">
-            <el-button size="mini" type="warning" icon="el-icon-setting"></el-button>
+            <el-button size="mini" type="warning" icon="el-icon-setting"
+                       @click="setRole(scope.row)"></el-button>
           </el-tooltip>
         </template>
       </el-table-column>
@@ -35,38 +36,49 @@
 </template>
 
 <script>
+import SetRoleDialog from "@/views/User/childComps/SetRoleDialog";
+
 export default {
   name: "UserList",
-  props:{
-    userList:{
-      type:Array
+  components: {SetRoleDialog},
+  props: {
+    userList: {
+      type: Array
     },
-    queryInfo:{
-      type:Object
+    queryInfo: {
+      type: Object
     },
-    total:{
-      type:Number
+    total: {
+      type: Number
     }
   },
-  methods:{
-    handleSizeChange(newSize){
+  data(){
+    return {
+    }
+  },
+  methods: {
+    handleSizeChange(newSize) {
       this.queryInfo.pagesize = newSize
-      this.$emit('handleSizeChange',this.queryInfo)
+      this.$emit('handleSizeChange', this.queryInfo)
     },
-    handleCurrentChange(newPage){
+    handleCurrentChange(newPage) {
       // console.log(newPage);
       this.queryInfo.pagenum = newPage
-      this.$emit('handleCurrentChange',this.queryInfo)
+      this.$emit('handleCurrentChange', this.queryInfo)
     },
-    userStateChange(userinfo){
+    userStateChange(userinfo) {
       // console.log(userinfo);
-      this.$emit('userStateChange',userinfo)
+      this.$emit('userStateChange', userinfo)
     },
-    editUser(id){
-      this.$emit('editUser',id)
+    editUser(id) {
+      this.$emit('editUser', id)
     },
-    deleteUser(id){
-      this.$emit('deleteUser',id)
+    deleteUser(id) {
+      this.$emit('deleteUser', id)
+    },
+    setRole(userInfo) {
+
+      this.$emit('setRole',userInfo)
     }
   }
 }
@@ -74,7 +86,7 @@ export default {
 
 <style lang="less" scoped>
 .el-table,
-.el-pagination{
+.el-pagination {
   margin-top: 15px;
 }
 

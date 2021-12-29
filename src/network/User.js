@@ -61,4 +61,14 @@ export function deleteUser(id){
   })
 }
 
+export function allotRole(userID,roleID){
+  return request({
+    url:`users/${userID}/role`,
+    method:'put',
+    data:{
+      rid:roleID
+    }
+  })
+}
+
 
