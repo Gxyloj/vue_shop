@@ -5,6 +5,7 @@ import Welcome from "@/views/Welcome";
 import User from "@/views/User/User";
 import Rights from "@/views/Power/Rights";
 import Roles from "@/views/Power/Roles";
+import Category from "@/views/Category/Category";
 
 
 const routes = [
@@ -36,10 +37,16 @@ const routes = [
       {
         path:'/roles',
         component: Roles
+      },
+      {
+        path: '/categories',
+        component: Category
       }
     ]
   },
-  {}
+  {
+
+  }
 ]
 
 const router = createRouter({
