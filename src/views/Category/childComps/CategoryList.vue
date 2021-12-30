@@ -1,11 +1,16 @@
 <template>
   <div>
-    <el-table  border stripe
+    <el-table  border
                :data="cateList"
                row-key="cat_id" >
-      <el-table-column type="index" label="#"></el-table-column>
+<!--      <el-table-column type="index" label="#"></el-table-column>-->
       <el-table-column prop="cat_name" label="分类名称"></el-table-column>
-      <el-table-column prop="" label="是否有效"></el-table-column>
+      <el-table-column prop="" label="是否有效" width="80px">
+        <template v-slot="scope">
+          <el-result v-if="scope.row.cat_deleted === false" icon="success"/>
+          <el-result v-if="scope.row.cat_deleted === true" icon="error"/>
+        </template>
+      </el-table-column>
       <el-table-column prop="cat_level" label="排序">
         <template v-slot="scope">
           <el-tag v-if="scope.row.cat_level === 0 ">一级</el-tag>
@@ -55,4 +60,13 @@ export default {
 .el-table{
   margin-top: 15px;
 }
+
+.el-result{
+  padding: 0;
+  display: inline-block;
+  --el-result-icon-font-size: 28px;
+  margin-left:50%;
+  transform: translate(-50%);
+}
+
 </style>
