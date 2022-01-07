@@ -27,7 +27,7 @@
       <el-table-column prop="" label="操作">
         <template v-slot="scope">
           <el-button size="mini" type="primary" icon="el-icon-edit" @click="editCategory(scope.row)">编辑</el-button>
-          <el-button size="mini" type="danger" icon="el-icon-delete">删除</el-button>
+          <el-button size="mini" type="danger" icon="el-icon-delete" @click="deleteCategory(scope.row.cat_id)">删除</el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -49,8 +49,9 @@
 </template>
 
 <script>
-import {getCategoryList} from "@/network/Category";
+import {deleteCategory, getCategoryList} from "@/network/Category";
 import EditCategoryDialog from "@/views/Category/childComps/EditCategoryDialog";
+import {ElMessage} from "element-plus";
 
 export default {
   name: "CategoryList",
@@ -98,6 +99,13 @@ export default {
       // console.log(cateInfo);
       this.editCategoryForm = cateInfo
     },
+    deleteCategory(cateID){
+      deleteCategory(cateID).then(res =>{
+        if (res.meta.status !== 200 ) return ElMessage.error(res.meta.msg)
+        ElMessage.success(res.meta.msg)
+        this.getCategoryList()
+      })
+    },
     handleSizeChange(newSize) {
       this.queryInfo.pagesize = newSize
       // this.$emit('handleSizeChange', this.queryInfo)
@@ -121,7 +129,6 @@ export default {
       while (id = tree.idList.shift()) {
         const tarItem = resolveArr.find(item => item.cat_id === id)
         tarItem.loadedChildren = true
-        console.log(tarItem);
         resolveArr = tarItem.children
       }
 

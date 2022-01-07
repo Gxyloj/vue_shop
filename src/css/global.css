@@ -23,3 +23,7 @@ html,body,
 .el-overlay{
   z-index: 2000 !important;
 }
+
+.el-cascader{
+  width: 100%;
+}

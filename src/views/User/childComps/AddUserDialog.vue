@@ -99,7 +99,7 @@ export default {
           this.addDialogVisible = false
           ElMessage.success('添加成功')
           this.resetAddForm()
-          this.$emit('updateList')
+          this.$emit('update@List')
         })
       })
 

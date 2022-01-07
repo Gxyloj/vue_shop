@@ -15,6 +15,17 @@ export function getCategoryList(queryInfo){
   })
 }
 
+export function getParentCategoryList(){
+  return request({
+    url:'categories',
+    method:'get',
+    params:{
+      type:2
+    }
+  })
+}
+
+
 export function editCategory(cateInfo) {
   return request({
     url:`categories/${cateInfo.cat_id}`,
@@ -24,3 +35,25 @@ export function editCategory(cateInfo) {
     }
   })
 }
+
+
+
+export function deleteCategory(cateID){
+  return request({
+    url:`categories/${cateID}`,
+    method:'delete'
+  })
+}
+
+export function addCategory(cateInfo){
+  return request({
+    url:'categories',
+    method:'post',
+    data:{
+      cat_pid:cateInfo.cat_pid,
+      cat_name:cateInfo.cat_name,
+      cat_level: cateInfo.cat_level
+    }
+  })
+}
+
