@@ -2,6 +2,7 @@ import { createApp } from 'vue'
 import App from './App.vue'
 import router from './router'
 import store from './store'
+import bus from "@/common/bus";
 import installElementPlus from './plugins/element'
 import * as ElIconModules from '@element-plus/icons'
 import './css/global.css'
@@ -16,3 +17,4 @@ for (const iconName in ElIconModules) {
     app.component(iconName, item)
   }
 }
+app.config.globalProperties.$bus = bus
