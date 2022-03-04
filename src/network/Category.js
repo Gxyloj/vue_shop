@@ -15,12 +15,12 @@ export function getCategoryList(queryInfo){
   })
 }
 
-export function getParentCategoryList(){
+export function getParentCategoryList(listType){
   return request({
     url:'categories',
     method:'get',
     params:{
-      type:2
+      type:listType
     }
   })
 }
@@ -57,3 +57,12 @@ export function addCategory(cateInfo){
   })
 }
 
+export function getCategoryAttributes(ID,type){
+  return request({
+    url:`categories/${ID}/attributes`,
+    method:'get',
+    params:{
+      sel:type
+    }
+  })
+}

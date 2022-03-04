@@ -67,7 +67,7 @@ export default {
     getParentCategoryList() {
       // let parentCategoryList
       // let optionsCate = []
-      getParentCategoryList().then(res => {
+      getParentCategoryList(2).then(res => {
         this.parentCategoryList = res.data
         // parentCategoryList.forEach(item => {
         //   optionsCate.push({'label': item.cat_name})

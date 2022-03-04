@@ -6,6 +6,7 @@ import User from "@/views/User/User";
 import Rights from "@/views/Power/Rights";
 import Roles from "@/views/Power/Roles";
 import Category from "@/views/Category/Category";
+import Params from "@/views/Params/Params";
 
 
 const routes = [
@@ -41,6 +42,10 @@ const routes = [
       {
         path: '/categories',
         component: Category
+      },
+      {
+        path: '/params',
+        component: Params
       }
     ]
   },
