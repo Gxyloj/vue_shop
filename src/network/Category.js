@@ -66,3 +66,22 @@ export function getCategoryAttributes(ID,type){
     }
   })
 }
+
+export function addParams(data){
+  return request({
+    url:`categories/${data.cat_id}/attributes`,
+    method:'post',
+    data:{
+      attr_name:data.attr_name,
+      attr_sel:data.attr_sel,
+
+    }
+  })
+}
+
+export function deleteParams(data){
+  return request({
+    url:`categories/${data.cat_id}/attributes/${data.attr_id}`,
+    method:'delete'
+  })
+}
