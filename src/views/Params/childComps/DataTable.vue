@@ -21,23 +21,26 @@
       </el-table-column>
       <el-table-column type="index" label="#"></el-table-column>
       <el-table-column type='' label="参数名称" prop="attr_name"></el-table-column>
-      <el-table-column type='' label="操作">
+      <el-table-column type='' label="操作" width="300px">
         <template v-slot="scope">
-          <el-button size="mini" type="primary" icon="el-icon-edit" @click="editRole(scope.row.attr_id)">编辑</el-button>
+          <el-button size="mini" type="primary" icon="el-icon-edit" @click="editParams(scope.row)">编辑</el-button>
           <el-button size="mini" type="danger" icon="el-icon-delete" @click="deleteParams(scope.row)">删除
           </el-button>
         </template>
       </el-table-column>
     </el-table>
+    <EditParamsDialog ref="EditParamsDialogRef"/>
   </div>
 </template>
 
 <script>
 import {deleteParams} from "@/network/Category";
 import {ElMessage, ElMessageBox} from "element-plus";
+import EditParamsDialog from "@/views/Params/childComps/EditParamsDialog";
 
 export default {
   name: "DataTable",
+  components: {EditParamsDialog},
   props: {
     paramsData: {
       type: Array
@@ -46,6 +49,7 @@ export default {
   data() {
     return {
       // paramsData:{},
+
     }
   },
   methods: {
@@ -76,6 +80,20 @@ export default {
         })
       })
 
+    },
+    editParams(paramsData){
+      this.$refs.EditParamsDialogRef.editParamsVisible = true
+      if (this.paramsData[0].attr_sel === 'many'){
+        // console.log('动态')
+        this.$refs.EditParamsDialogRef.editParamsDialogTitle = "动态参数"
+      }else
+        this.$refs.EditParamsDialogRef.editParamsDialogTitle = "静态属性"
+      // console.log(paramsData);
+      // this.$refs.EditParamsDialogRef.editParamsForm = paramsData
+      this.$refs.EditParamsDialogRef.editParamsForm.cat_id = paramsData.cat_id
+      this.$refs.EditParamsDialogRef.editParamsForm.attr_id = paramsData.attr_id
+      this.$refs.EditParamsDialogRef.editParamsForm.attr_name = paramsData.attr_name
+      this.$refs.EditParamsDialogRef.editParamsForm.attr_sel = paramsData.attr_sel
     }
   }
 }

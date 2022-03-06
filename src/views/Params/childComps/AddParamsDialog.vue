@@ -2,7 +2,8 @@
   <div>
     <el-dialog v-model="addParamsVisible"
                :title="`添加${addParamsDialogTitle}`"
-               width="50%">
+               width="50%"
+               @close="closeAddParamsDialog">
       <el-form :model="addParamsForm"
                :rules="addParamsRules">
         <el-form-item :label="addParamsDialogTitle" prop="attr_name">
@@ -10,7 +11,7 @@
         </el-form-item>
       </el-form>
       <template #footer>
-        <el-button @click="this.addParamsVisible = false">取消</el-button>
+        <el-button @click="closeAddParamsDialog">取消</el-button>
         <el-button type="primary" @click="addParamsRequest">确定</el-button>
       </template>
     </el-dialog>
@@ -22,7 +23,7 @@ import {addParams} from "@/network/Category";
 import {ElMessage} from "element-plus";
 
 export default {
-  name: "AddParams",
+  name: "AddParamsDialog",
   data() {
     return {
       addParamsVisible: false,
@@ -39,18 +40,33 @@ export default {
 
     }
   },
-  methods:{
-    addParamsRequest(){
+  methods: {
+    addParamsRequest() {
       addParams(this.addParamsForm).then(res => {
         // console.log(res);
-        if (res.meta.status !== 201){
+        if (res.meta.status !== 201) {
           ElMessage.error(res.meta.msg)
-        }else {
+        } else {
           ElMessage.success(res.meta.msg)
           this.addParamsVisible = false
           this.$emit('updateParamsList')
+          this.addParamsForm = {
+            cat_id: null,
+            attr_name: '',
+            attr_sel: 'many',
+            attr_vals: ''
+          }
         }
       })
+    },
+    closeAddParamsDialog() {
+      this.addParamsVisible = false
+      this.addParamsForm = {
+        cat_id: null,
+        attr_name: '',
+        attr_sel: 'many',
+        attr_vals: ''
+      }
     }
   }
 }

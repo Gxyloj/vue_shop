@@ -18,7 +18,7 @@
 <script>
 import {getCategoryAttributes} from "@/network/Category";
 import DataTable from "@/views/Params/childComps/DataTable";
-import AddParams from "@/views/Params/childComps/AddParams";
+import AddParams from "@/views/Params/childComps/AddParamsDialog";
 
 export default {
   name: "ParamsTabs",
@@ -53,7 +53,7 @@ export default {
     }
   },
   created() {
-
+    this.$bus.$on("updateParamsListBus",this.updateParamsList)
   },
   methods:{
     handleClick(){

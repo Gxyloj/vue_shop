@@ -85,3 +85,15 @@ export function deleteParams(data){
     method:'delete'
   })
 }
+
+export function editParams(data){
+  return request({
+    url:`categories/${data.cat_id}/attributes/${data.attr_id}`,
+    method:'put',
+    data:{
+      attr_name:data.attr_name,
+      attr_sel:data.attr_sel,
+      attr_vals:data.attr_vals
+    }
+  })
+}
