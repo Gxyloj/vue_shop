@@ -40,7 +40,7 @@
               v-model="scope.row.inputValue"
               class="ml-1 w-20 input-new-tag"
               size="small"
-              @keyup.enter="handleInputConfirm(scope.row)"
+              @keyup.enter="$event.target.blur()"
               @blur="handleInputConfirm(scope.row)"
           >
           </el-input>
