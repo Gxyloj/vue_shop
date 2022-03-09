@@ -93,7 +93,9 @@ export function editParams(data){
     data:{
       attr_name:data.attr_name,
       attr_sel:data.attr_sel,
-      attr_vals:data.attr_vals
+      // attr_vals:data.attr_vals
+      attr_vals:typeof data.attr_vals === 'string' ?
+        data.attr_vals : data.attr_vals.toString()
     }
   })
 }

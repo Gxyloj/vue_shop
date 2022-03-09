@@ -64,13 +64,29 @@ export default {
       if (this.selectedKeys){
         getCategoryAttributes(this.selectedKeys.at(-1),this.attributesType).then(res => {
           // console.log(res);
-          if (this.attributesType === 'only'){
-            this.onlyTableData = res.data
-            console.log(this.onlyTableData);
-          }else if(this.attributesType === 'many'){
-            this.manyTableData = res.data
-            console.log(this.manyTableData);
-          }
+          // if (this.attributesType === 'only'){
+          //   // console.log(res.data);
+          //   res.data.forEach(item => {
+          //     item.attr_vals  = item.attr_vals ? item.attr_vals.split(',') : []
+          //
+          //   })
+          //   this.onlyTableData = res.data
+          //   console.log(this.onlyTableData);
+          // }else if(this.attributesType === 'many'){
+          //   // console.log(res.data);
+          //   res.data.forEach(item => {
+          //     item.attr_vals = item.attr_vals ? item.attr_vals.split(',') : []
+          //   })
+          //   this.manyTableData = res.data
+          //   // console.log(this.manyTableData);
+          // }
+          // console.log(res.data);
+          res.data.forEach(item => {
+            item.attr_vals = item.attr_vals ? item.attr_vals.split(',') : []
+            item.inputVisible = false
+            item.inputValue = ''
+            this.attributesType === 'only' ? this.onlyTableData = res.data : this.manyTableData = res.data
+          })
         })
       }
     },
