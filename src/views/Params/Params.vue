@@ -19,7 +19,8 @@
           </el-cascader>
         </el-col>
       </el-row>
-      <ParamsTabs :selectedKeys="selectedKeys"/>
+      <ParamsTabs :selectedKeys="selectedKeys"
+                  ref="ParamsTabsRef"/>
 
     </el-card>
   </div>
@@ -65,6 +66,9 @@ export default {
         if (this.selectedKeys.length !== 3) {
           this.selectedKeys = []
           ElMessage.info('只允许为第三级分类设置相关参数！')
+          this.$refs.ParamsTabsRef.manyTableData = []
+          this.$refs.ParamsTabsRef.onlyTableData = []
+
         }
       }
 
