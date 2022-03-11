@@ -7,6 +7,8 @@ import Rights from "@/views/Power/Rights";
 import Roles from "@/views/Power/Roles";
 import Category from "@/views/Category/Category";
 import Params from "@/views/Params/Params";
+import GoodsList from "@/views/GoodsList/GoodsList";
+import AddGoods from "@/views/GoodsList/AddGoods";
 
 
 const routes = [
@@ -46,6 +48,15 @@ const routes = [
       {
         path: '/params',
         component: Params
+      },
+      {
+        path: '/goods',
+        component: GoodsList,
+
+      },
+      {
+        path: '/goods/add',
+        component: AddGoods
       }
     ]
   },
