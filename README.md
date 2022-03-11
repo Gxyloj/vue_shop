@@ -1,4 +1,4 @@
-# vue_shop
+# vue_shop  项目地址：http://gxyloj.eicp.net:8093
 
 ## 后台接口：https://github.com/lysimportant/vue_shop_server
 ## 以element-ui组件库为基础构建的后台管理系统
