@@ -7,6 +7,7 @@
     "build": "vue-cli-service build"
   },
   "dependencies": {
+    "@jsdawn/vue3-tinymce": "^1.1.7",
     "axios": "^0.24.0",
     "core-js": "^3.6.5",
     "element-plus": "^1.0.2-beta.28",

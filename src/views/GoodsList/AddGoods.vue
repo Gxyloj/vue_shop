@@ -112,6 +112,9 @@
                             </template>-->
             </el-upload>
           </div>
+          <div v-if="index === 4">
+            <Vue3Tinymce :setting="setting"/>
+          </div>
           <div v-if="index === 5">
             <el-button type="primary" @click="addGoods">添加商品</el-button>
           </div>
@@ -122,16 +125,19 @@
   <PreviewDialog ref="PreviewDialogRef" :previewPath="previewPath"/>
 </template>
 
+
 <script>
 import BreadCrumbs from "@/components/commom/BreadCrumbs";
 import {getCategoryAttributes, getParentCategoryList} from "@/network/Category";
 import {ElMessage} from "element-plus";
 import {addGoods} from "@/network/GoodsList";
 import PreviewDialog from "@/views/GoodsList/ChildComps/PreviewDialog";
+import Vue3Tinymce from '@jsdawn/vue3-tinymce';
+
 
 export default {
   name: "AddGoods",
-  components: {PreviewDialog, BreadCrumbs},
+  components: {PreviewDialog, BreadCrumbs, Vue3Tinymce},
   data() {
     return {
       navTitle: {
@@ -175,7 +181,7 @@ export default {
         goods_price: 0,
         goods_weight: 0,
         goods_number: 0,
-        pics:[],
+        pics: [],
       },
       cateList: [],
       cascaderProps: {
@@ -189,10 +195,31 @@ export default {
       onlyDataCopy: [],
       manyData: [],
       //图片上传组件的headers对象
-      headersObj:{
-        Authorization:window.sessionStorage.getItem('token')
+      headersObj: {
+        Authorization: window.sessionStorage.getItem('token')
       },
-      previewPath:''
+      previewPath: '',
+      setting: {
+        height: 500,
+        menubar: false,
+        toolbar:
+            'bold italic underline h1 h2 blockquote codesample numlist bullist link image | removeformat fullscreen',
+        plugins: 'codesample link image table lists fullscreen',
+        toolbar_mode: 'sliding',
+        nonbreaking_force_tab: true,
+        link_title: false,
+        default_link_target: '_blank',
+        content_style: 'body{font-size: 16px}',
+        // 自定义 图片上传模式
+        // custom_images_upload: true,
+        // images_upload_url: 'your_upload_api_url...',
+        // custom_images_upload_callback: res => res.url,
+        // custom_images_upload_param: { id: 'xxxx01', age: 18 },
+        // 以中文简体为例
+        language: 'zh_CN',
+        language_url:
+            'https://unpkg.com/@jsdawn/vue3-tinymce@1.1.6/dist/tinymce/langs/zh_CN.js'
+      },
     }
   },
   created() {
@@ -246,21 +273,21 @@ export default {
       // })
     },
     //图片预览
-    handlePreview(file){
+    handlePreview(file) {
       console.log(file);
       this.previewPath = 'http://gxyloj.eicp.net:8094/' + file.response.data.tmp_path
       this.$refs.PreviewDialogRef.previewDialogVisible = true
     },
     //图片remove
-    handleRemove(file){
+    handleRemove(file) {
       const filePath = file.response.data.tmp_path
       const i = this.goodsInfoForm.pics.findIndex(x => x.pic === filePath)
-      this.goodsInfoForm.pics.splice(i,1)
+      this.goodsInfoForm.pics.splice(i, 1)
       console.log(this.goodsInfoForm);
     },
     //图片成功上传
-    handleSuccess(response){
-      const picInfo = {pic:response.data.tmp_path}
+    handleSuccess(response) {
+      const picInfo = {pic: response.data.tmp_path}
       this.goodsInfoForm.pics.push(picInfo)
 
     },
