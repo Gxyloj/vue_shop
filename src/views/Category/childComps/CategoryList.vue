@@ -112,7 +112,6 @@ export default {
       this.getCategoryList()
     },
     handleCurrentChange(newPage) {
-      // console.log(newPage);
       this.queryInfo.pagenum = newPage
       // this.$emit('handleCurrentChange', this.queryInfo)
       this.getCategoryList()

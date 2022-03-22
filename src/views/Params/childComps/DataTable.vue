@@ -3,27 +3,27 @@
     <el-table :data="paramsData" row-key="attr_id" stripe border>
       <el-table-column type="expand">
         <template v-slot="scope">
-          <!--          {{scope.row.attr_vals.split(',')}}-->
-          <!--          {{ scope.row }}-->
-          <!--          &lt;!&ndash;          动态参数&ndash;&gt;-->
-          <!--          <div v-show="scope.row.attr_sel === 'many'">-->
-          <!--            <el-tag v-if="scope.row.attr_vals" v-for="(item,i) in scope.row.attr_vals.split(',')" :key="i" closable>-->
-          <!--              {{ item }}-->
-          <!--            </el-tag>-->
-          <!--            <el-tag>-->
-          <!--              + New Tag-->
-          <!--            </el-tag>-->
-          <!--          </div>-->
-          <!--          &lt;!&ndash;          静态属性&ndash;&gt;-->
-          <!--          <div v-show="scope.row.attr_sel === 'only'">-->
-          <!--            <el-tag v-for="(item,i) in scope.row.attr_vals.split(' ')" :key="i" closable>-->
-          <!--              {{ item }}-->
-          <!--            </el-tag>-->
-          <!--            <el-tag>-->
-          <!--              + New Tag-->
-          <!--            </el-tag>-->
-          <!--          </div>-->
-          <!--          scope.row.attr_sel === 'many' ? ',' : ' '-->
+<!--                    {{scope.row.attr_vals.split(',')}}
+                    {{ scope.row }}
+                    &lt;!&ndash;          动态参数&ndash;&gt;
+                    <div v-show="scope.row.attr_sel === 'many'">
+                      <el-tag v-if="scope.row.attr_vals" v-for="(item,i) in scope.row.attr_vals.split(',')" :key="i" closable>
+                        {{ item }}
+                      </el-tag>
+                      <el-tag>
+                        + New Tag
+                      </el-tag>
+                    </div>
+                    &lt;!&ndash;          静态属性&ndash;&gt;
+                    <div v-show="scope.row.attr_sel === 'only'">
+                      <el-tag v-for="(item,i) in scope.row.attr_vals.split(' ')" :key="i" closable>
+                        {{ item }}
+                      </el-tag>
+                      <el-tag>
+                        + New Tag
+                      </el-tag>
+                    </div>
+                    scope.row.attr_sel === 'many' ? ',' : ' '-->
           <el-tag v-if="scope.row.attr_vals"
                   v-for="(item,i) in scope.row.attr_vals
                   "
