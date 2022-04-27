@@ -7,6 +7,7 @@
           <el-col :span="8">
             <el-input
                 placeholder="请输入内容"
+                v-model="queryInfo.query"
                 clearable
                 @clear="getGoodsList"
             >
@@ -43,7 +44,7 @@
   </div>
 </template>
 
-<script >
+<script>
 import BreadCrumbs from "@/components/commom/BreadCrumbs";
 import GoodsListTable from "@/views/GoodsList/ChildComps/GoodsListTable";
 import {getGoodsList} from "@/network/GoodsList";
@@ -70,19 +71,22 @@ export default {
   },
   created() {
     this.getGoodsList()
+    this.$bus.$on('updateGoodsListBus',this.getGoodsList)
   },
   methods: {
     getGoodsList(msg) {
       getGoodsList(this.queryInfo).then(res => {
+        // console.log(this.queryInfo)
         // console.log(res);
         if (res.meta.status !== 200) {
           return ElMessage.error(res.meta.msg)
         }
-        ElMessage.success(msg ? msg : res.meta.msg)
+        ElMessage.success(res.meta.msg)
         this.total = res.data.total
         // this.goodsList = res.data.goods
         // console.log(this.goodsList);
         // console.log(moment(1514345477).format('YYYY-MM-DD HH:mm:ss'));
+        if (res.data.goods.length === 0) this.goodsList = []
         res.data.goods.forEach(item => {
           item.add_time = moment(item.upd_time).format('YYYY-MM-DD HH:mm:ss')
           this.goodsList = res.data.goods
@@ -93,8 +97,8 @@ export default {
       this.queryInfo.pagesize = newSize
       this.getGoodsList()
       window.scrollTo({
-        top:0,
-        behavior:"smooth"
+        top: 0,
+        behavior: "smooth"
       })
     },
     handleCurrentChange(newPage) {
@@ -102,8 +106,8 @@ export default {
       this.queryInfo.pagenum = newPage
       this.getGoodsList(msg)
       window.scrollTo({
-        top:0,
-        behavior:"smooth"
+        top: 0,
+        behavior: "smooth"
       })
     },
   }
@@ -111,7 +115,7 @@ export default {
 </script>
 
 <style scoped>
-  .head{
-    margin-bottom: 20px;
-  }
+.head {
+  margin-bottom: 20px;
+}
 </style>

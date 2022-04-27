@@ -266,11 +266,16 @@ export default {
       }
     },
     addGoods() {
-      console.log(this.goodsInfoForm);
+      // console.log(this.goodsInfoForm);
 
-      // addGoods(this.goodsInfoForm).then(res => {
-      //   console.log(res);
-      // })
+      addGoods(this.goodsInfoForm).then(res => {
+        if (res.meta.status === 201) {
+          ElMessage.success(res.meta.msg)
+          this.$router.push('/goods')
+        } else {
+          ElMessage.error(res.meta.msg)
+        }
+      })
     },
     //图片预览
     handlePreview(file) {

@@ -29,3 +29,9 @@ export function addGoods(goodsInfo){
     }
   })
 }
+export function deleteGoods(id){
+  return request({
+    url:`goods/${id}`,
+    method:'delete'
+  })
+}
