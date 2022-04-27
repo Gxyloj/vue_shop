@@ -12,3 +12,10 @@ export function checkEmail(rule,value,cb){
     return cb();
   cb(new Error('请输入正确的邮箱'))
 }
+
+export function checkNotZero(rule,value,cb){
+  const regNotZero = /0/
+  if (!regNotZero.test(value))
+    return cb()
+  cb(new Error('不允许设置为0'))
+}

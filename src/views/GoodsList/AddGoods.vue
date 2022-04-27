@@ -17,109 +17,60 @@
         <el-step v-for="item in tabsValues" :title="item.title"></el-step>
       </el-steps>
 
-
-      <!--      tab标签页-->
-      <el-tabs tab-position="left" :before-leave="beforeLeave">
-        <!--                <el-tab-pane label="基本信息" :name="tabsValues.title[1]">
-                          User
-                          <el-button @click="a"></el-button>
-                        </el-tab-pane>
-                        <el-tab-pane label="商品参数" :name="tabsValues.title[2]">
-                          Config
-                          <el-button @click="a"></el-button>
-                        </el-tab-pane>
-                        <el-tab-pane label="商品属性" :name="tabsValues.title[3]">
-                          Role
-                          <el-button @click="a"></el-button>
-                        </el-tab-pane>
-                        <el-tab-pane label="商品图片" :name="tabsValues.title[4]">
-                          Task
-                          <el-button @click="a"></el-button>
-                        </el-tab-pane>
-                        <el-tab-pane label="商品内容" :name="tabsValues.title[5]">
-                          Task
-                          <el-button @click="a"></el-button>
-                        </el-tab-pane>
-                        <el-tab-pane label="商品完成" :name="tabsValues.title[6]">
-                          Task
-                          <el-button @click="a"></el-button>
-                        </el-tab-pane>-->
-        <el-tab-pane v-for="(item,index) in tabsValues"
-                     :label="item.title"
-        >
-          <!--          基本信息-->
-          <div v-if="index === 0">
-            <el-form :model="goodsInfoForm">
-              <div style="width: 50%">
-                <el-form-item label="商品名称" prop="goods_name">
-                  <el-input v-model="goodsInfoForm.goods_name" type="textarea" :row="3"></el-input>
-                </el-form-item>
-                <el-form-item label="商品价格" prop="goods_price">
-                  <el-input-number v-model="goodsInfoForm.goods_price"></el-input-number>
-                </el-form-item>
-                <el-form-item label="商品重量" prop="goods_weight">
-                  <el-input-number v-model="goodsInfoForm.goods_weight"></el-input-number>
-                </el-form-item>
-                <el-form-item label="商品数量" prop="goods_number">
-                  <el-input-number v-model="goodsInfoForm.goods_number"></el-input-number>
-                </el-form-item>
-                <el-form-item>
-                  <el-cascader :options="cateList"
-                               clearable
-                               :props="cascaderProps"
-                               v-model="selectedKeys"
-                               @change="selectedChange">
-
-                  </el-cascader>
-                </el-form-item>
-              </div>
-            </el-form>
-          </div>
-          <div v-if="index === 1">
-            <div v-for="cbGroup in manyData">
-              <p>{{ cbGroup.attr_name }}</p>
-              <!--              cbGroup.attr_valsCopy为实际选中的选项-->
-              <el-checkbox-group v-model="cbGroup.attr_valsCopy">
-                <el-checkbox v-for="cbName in cbGroup.attr_vals"
-                             :label="cbName" border/>
-              </el-checkbox-group>
-            </div>
-          </div>
-          <!--          商品属性-->
-          <div v-if="index === 2">
-            <!--            {{ onlyData }}-->
-            <el-form :model="onlyData" label-position="top">
-              <el-form-item v-for="item in onlyData" :label="item.attr_name">
-                <el-input v-model="item.attr_vals"></el-input>
+      <el-form :model="goodsInfoForm" :rules="goodsInfoFormRules" label-position="top">
+        <el-tabs tab-position="left" :before-leave="beforeLeave">
+          <el-tab-pane label="基本信息">
+            <div style="width: 50%">
+              <el-form-item label="商品名称" prop="goods_name">
+                <el-input v-model="goodsInfoForm.goods_name" type="textarea" :row="3"></el-input>
               </el-form-item>
-            </el-form>
-          </div>
-          <!--          商品图片-->
-          <div v-if="index === 3">
-            <el-upload
-                action="http://gxyloj.eicp.net:8094/api/private/v1/upload"
-                :headers="headersObj"
-                :on-preview="handlePreview"
-                :on-remove="handleRemove"
-                :on-success="handleSuccess"
-                list-type="picture"
-            >
-              <el-button type="primary">点击上传图片</el-button>
-              <!--              <template #tip>
-                              <div class="el-upload__tip">
-                                jpg/png files with a size less than 500kb
-                              </div>
-                            </template>-->
-            </el-upload>
-          </div>
-          <div v-if="index === 4">
-            <Vue3Tinymce :setting="setting"/>
-          </div>
-          <div v-if="index === 5">
-            <el-button type="primary" @click="addGoods">添加商品</el-button>
-          </div>
-        </el-tab-pane>
-      </el-tabs>
+              <el-form-item label="商品价格" prop="goods_price">
+                <el-input-number v-model="goodsInfoForm.goods_price"></el-input-number>
+              </el-form-item>
+              <el-form-item label="商品重量" prop="goods_weight">
+                <el-input-number v-model="goodsInfoForm.goods_weight"></el-input-number>
+              </el-form-item>
+              <el-form-item label="商品数量" prop="goods_number">
+                <el-input-number v-model="goodsInfoForm.goods_number"></el-input-number>
+              </el-form-item>
+              <el-form-item label="商品分类">
+                <el-cascader :options="cateList"
+                             clearable
+                             :props="cascaderProps"
+                             v-model="selectedKeys"
+                             @change="selectedChange">
+
+                </el-cascader>
+              </el-form-item>
+            </div>
+          </el-tab-pane>
+          <el-tab-pane label="商品参数">
+            <el-form-item v-for="item in manyData"
+                          :label="item.attr_name"
+                          :key="item.attr_id">
+              <!--              复选框组-->
+              <!--              vals是实际绑定的数据-->
+              <!--              valsCopy是有哪些是要显示的-->
+              <el-checkbox-group v-model="item.attr_vals">
+                <el-checkbox v-for="(cb,i) in item.attr_valsCopy"
+                             :label="cb"
+                             border/>
+              </el-checkbox-group>
+            </el-form-item>
+          </el-tab-pane>
+          <el-tab-pane label="商品属性">
+            <el-form-item v-for="item in onlyData"
+                          :label="item.attr_name"
+                          :key="item.attr_id">
+              <el-input v-model="item.attr_vals"></el-input>
+            </el-form-item>
+          </el-tab-pane>
+          <el-tab-pane label="商品图片">Task</el-tab-pane>
+          <el-tab-pane label="商品内容">Task</el-tab-pane>
+          <el-tab-pane label="商品完成">Task</el-tab-pane>
+        </el-tabs>
+      </el-form>
+
     </el-card>
   </div>
   <PreviewDialog ref="PreviewDialogRef" :previewPath="previewPath"/>
@@ -133,6 +84,7 @@ import {ElMessage} from "element-plus";
 import {addGoods} from "@/network/GoodsList";
 import PreviewDialog from "@/views/GoodsList/ChildComps/PreviewDialog";
 import Vue3Tinymce from '@jsdawn/vue3-tinymce';
+import {checkNotZero} from "@/common/utlis";
 
 
 export default {
@@ -183,6 +135,28 @@ export default {
         goods_number: 0,
         pics: [],
       },
+      goodsInfoFormRules: {
+        goods_name: [
+          {required: true, message: '请输入商品名称', trigger: 'blur'}
+        ],
+        goods_price: [
+          {required: true, message: '请设置商品价格', trigger: 'blur'},
+          {validator: checkNotZero, trigger: 'blur'}
+        ],
+        goods_weight: [
+          {required: true, message: '请设置商品重量', trigger: 'blur'},
+          {validator: checkNotZero, trigger: 'blur'}
+        ],
+        goods_number: [
+          {required: true, message: '请设置商品数量', trigger: 'blur'},
+          {validator: checkNotZero, trigger: 'blur'}
+        ],
+        goods_cat: [
+          {required: true, message: '请选择商品分类', trigger: 'blur'}
+        ]
+
+
+      },
       cateList: [],
       cascaderProps: {
         expandTrigger: 'hover',
@@ -192,7 +166,6 @@ export default {
       },
       selectedKeys: [],
       onlyData: [],
-      onlyDataCopy: [],
       manyData: [],
       //图片上传组件的headers对象
       headersObj: {
@@ -240,29 +213,37 @@ export default {
       }
       switch (activeName) {
         case '1':
-          getCategoryAttributes(this.selectedKeys.at(-1), 'many').then(res => {
-            // console.log(res);
-            res.data.forEach(item => {
-              item.attr_vals = item.attr_vals ? item.attr_vals.split(',') : []
-              item.attr_valsCopy = item.attr_vals
-              this.manyData = res.data
-              // console.log(this.manyData);
+          if (this.selectedKeys) {
+            getCategoryAttributes(this.selectedKeys.at(-1), 'many').then(res => {
+              // console.log(res);
+              res.data.forEach(item => {
+                item.attr_vals = item.attr_vals ? item.attr_vals.split(',') : []
+                item.attr_valsCopy = item.attr_vals
+                this.manyData = res.data
+                // console.log(this.manyData);
+              })
             })
-          })
+          }
           break;
         case '2':
-          getCategoryAttributes(this.selectedKeys.at(-1), 'only').then(res => {
-            this.onlyData = res.data
-
-          })
+          if (this.selectedKeys) {
+            getCategoryAttributes(this.selectedKeys.at(-1), 'only').then(res => {
+              console.log(res)
+              this.onlyData = res.data
+            })
+          }
       }
     },
     selectedChange() {
-      this.goodsInfoForm.goods_cat = this.selectedKeys.join(',')
       if (this.selectedKeys) {
         if (this.selectedKeys.length !== 3) {
           this.selectedKeys = []
         }
+      }
+      if (this.selectedKeys) {
+        this.goodsInfoForm.goods_cat = this.selectedKeys.join(',')
+      } else {
+        this.goodsInfoForm.goods_cat = null
       }
     },
     addGoods() {
