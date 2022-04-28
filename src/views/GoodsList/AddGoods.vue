@@ -17,7 +17,10 @@
         <el-step v-for="item in tabsValues" :title="item.title"></el-step>
       </el-steps>
 
-      <el-form :model="goodsInfoForm" :rules="goodsInfoFormRules" label-position="top">
+      <el-form :model="goodsInfoForm"
+               :rules="goodsInfoFormRules"
+               label-position="top"
+               ref="goodsInfoFormRef">
         <el-tabs tab-position="left" :before-leave="beforeLeave">
           <el-tab-pane label="基本信息">
             <div style="width: 50%">
@@ -65,9 +68,23 @@
               <el-input v-model="item.attr_vals"></el-input>
             </el-form-item>
           </el-tab-pane>
-          <el-tab-pane label="商品图片">Task</el-tab-pane>
-          <el-tab-pane label="商品内容">Task</el-tab-pane>
-          <el-tab-pane label="商品完成">Task</el-tab-pane>
+          <el-tab-pane label="商品图片">
+            <el-upload
+                action="http://gxyloj.eicp.net:8094/api/private/v1/upload"
+                :headers="headersObj"
+                :on-preview="handlePreview"
+                :on-remove="handleRemove"
+                :on-success="handleSuccess"
+                list-type="picture"
+            >
+              <el-button type="primary">点击上传图片</el-button>
+            </el-upload>
+          </el-tab-pane>
+          <el-tab-pane label="商品内容">
+            <Vue3Tinymce :setting="setting"
+                         v-model="goodsInfoForm.goods_introduce"/>
+            <el-button type="primary" @click="addGoods">添加商品</el-button>
+          </el-tab-pane>
         </el-tabs>
       </el-form>
 
@@ -121,10 +138,6 @@ export default {
           index: 4,
           title: '商品内容'
         },
-        {
-          index: 5,
-          title: '商品完成'
-        },
       ],
       OK: true,
       goodsInfoForm: {
@@ -134,6 +147,8 @@ export default {
         goods_weight: 0,
         goods_number: 0,
         pics: [],
+        goods_introduce:'',
+        attrs:[]
       },
       goodsInfoFormRules: {
         goods_name: [
@@ -177,7 +192,7 @@ export default {
         menubar: false,
         toolbar:
             'bold italic underline h1 h2 blockquote codesample numlist bullist link image | removeformat fullscreen',
-        plugins: 'codesample link image table lists fullscreen',
+        plugins: 'codesample link table lists fullscreen',
         toolbar_mode: 'sliding',
         nonbreaking_force_tab: true,
         link_title: false,
@@ -247,8 +262,25 @@ export default {
       }
     },
     addGoods() {
-      // console.log(this.goodsInfoForm);
+      this.$refs.goodsInfoFormRef.validate(valid => {
+        if (!valid) return ElMessage.error('请完整填写商品信息')
+        //动态属性
+        this.manyData.forEach(many => {
+          this.goodsInfoForm.attrs.push({
+            attr_id:many.attr_id,
+            attr_value:many.attr_vals.join(',')
+          })
+        })
+        //静态参数
+        this.onlyData.forEach(only => {
+          this.goodsInfoForm.attrs.push({
+            attr_id:only.attr_id,
+            attr_value:only.attr_vals
+          })
+        })
+      })
 
+      //发起请求
       addGoods(this.goodsInfoForm).then(res => {
         if (res.meta.status === 201) {
           ElMessage.success(res.meta.msg)
@@ -314,5 +346,8 @@ export default {
   text-align: left;
   float: none;
   word-break: break-word;
+}
+.el-button{
+  margin-top: 15px;
 }
 </style>
